@@ -2,61 +2,47 @@
 var HelloWorldLayer = cc.Layer.extend({
     sprite:null,
     ctor:function () {
-        //////////////////////////////
-        // 1. super init first
+
+        // 初期化？
         this._super();
 
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
-        // ask director the window size
+        // ウィンドウサイズを取得
         var size = cc.director.getWinSize();
 
-        // add a "close" icon to exit the progress. it's an autorelease object
-        var closeItem = cc.MenuItemImage.create(
-            res.CloseNormal_png,
-            res.CloseSelected_png,
-            function () {
-                cc.log("Menu is clicked!");
-            }, this);
-        closeItem.attr({
-            x: size.width - 20,
-            y: 20,
-            anchorX: 0.5,
-            anchorY: 0.5
-        });
-
-        var menu = cc.Menu.create(closeItem);
-        menu.x = 0;
-        menu.y = 0;
-        this.addChild(menu, 1);
+        /////////////////////////////
+        // 背景イメージのスプライトを作成
+        /////////////////////////////
+        // どうやらレイヤーの 0 が一番奥である模様
+        this.back_img = cc.Sprite.create(res.Back_jpg);
+        // 中心を指定する模様
+        this.back_img.x = size.width / 2;
+        this.back_img.y = size.height / 2;
+        this.addChild(this.back_img, 0)
 
         /////////////////////////////
-        // 3. add your codes below...
-        // add a label shows "Hello World"
-        // create and initialize a label
-        var helloLabel = cc.LabelTTF.create("Hello World", "Arial", 38);
-        // position the label on the center of the screen
-        helloLabel.x = size.width / 2;
-        helloLabel.y = 0;
-        // add the label as a child to this layer
-        this.addChild(helloLabel, 5);
+        // UFOのスプライトを作成
+        /////////////////////////////
+        this.ufo = cc.Sprite.create(res.UFO_png);
+        //this.ufo.x = size.width /2;
+        this.ufo.x = 100;
+        this.ufo.y = size.height /2;
+        this.addChild(this.ufo, 5)
 
-        // add "HelloWorld" splash screen"
-        this.sprite = cc.Sprite.create(res.HelloWorld_png);
-        this.sprite.attr({
-            x: size.width / 2,
-            y: size.height / 2,
-            scale: 0.5,
-            rotation: 180
-        });
-        this.addChild(this.sprite, 0);
+        /////////////////////////////
+        // UFOの動きを定義
+        /////////////////////////////
+        // 1秒で右に200移動
+        var act1 = cc.MoveBy.create(1, cc.p(200 , 0));
+        // 0.5秒づつジクザグに
+        var act2 = cc.MoveBy.create(0.5, cc.p(100 , 100));
+        var act3 = cc.MoveBy.create(0.5, cc.p(100 , -200));
+        var act4 = cc.MoveBy.create(0.5, cc.p(100 , 200));
+        var act5 = cc.MoveBy.create(0.5, cc.p(100 , -200));
+        // 0.5秒で左上に移動しながら10分の1に縮小
+        var act6 = cc.Spawn.create(cc.MoveBy.create(0.5, cc.p(-600, 100)), cc.ScaleTo.create(0.5, 0.1, 0.1));
+        // アクションを実行
+        this.ufo.runAction(cc.Sequence.create(act1, act2, act3, act4, act5, act6));
 
-        var rotateToA = cc.RotateTo.create(2, 0);
-        var scaleToA = cc.ScaleTo.create(2, 1, 1);
-
-        this.sprite.runAction(cc.Sequence.create(rotateToA, scaleToA));
-        helloLabel.runAction(cc.Spawn.create(cc.MoveBy.create(2.5, cc.p(0, size.height - 40)),cc.TintTo.create(2.5,255,125,0)));
         return true;
     }
 });

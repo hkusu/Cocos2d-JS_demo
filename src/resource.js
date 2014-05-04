@@ -1,14 +1,12 @@
 var res = {
-    HelloWorld_png : "res/HelloWorld.png",
-    CloseNormal_png : "res/CloseNormal.png",
-    CloseSelected_png : "res/CloseSelected.png"
+    UFO_png : "res/ufo_96.png",
+    Back_jpg : "res/back.jpg"
 };
 
 var g_resources = [
     //image
-    res.HelloWorld_png,
-    res.CloseNormal_png,
-    res.CloseSelected_png
+    res.UFO_png,
+    res.Back_jpg
 
     //plist
 
