@@ -38,10 +38,14 @@ var HelloWorldLayer = cc.Layer.extend({
         var act3 = cc.MoveBy.create(0.5, cc.p(100 , -200));
         var act4 = cc.MoveBy.create(0.5, cc.p(100 , 200));
         var act5 = cc.MoveBy.create(0.5, cc.p(100 , -200));
+        // 回転
+        var act6 = cc.RotateTo.create(0.5, 180);
+        var act7 = cc.RotateTo.create(0.5, 360);
         // 0.5秒で左上に移動しながら10分の1に縮小
-        var act6 = cc.Spawn.create(cc.MoveBy.create(0.5, cc.p(-600, 100)), cc.ScaleTo.create(0.5, 0.1, 0.1));
+        var act8 = cc.Spawn.create(cc.MoveBy.create(0.5, cc.p(-600, 100)), cc.ScaleTo.create(0.5, 0.1, 0.1));
+
         // アクションを実行
-        this.ufo.runAction(cc.Sequence.create(act1, act2, act3, act4, act5, act6));
+        this.ufo.runAction(cc.Sequence.create(act1, act2, act3, act4, act5, act6, act7, act8));
 
         return true;
     }
